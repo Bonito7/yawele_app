@@ -10,7 +10,7 @@ import 'dart:convert';
 import 'package:path/path.dart';
 
 class CityProvider with ChangeNotifier {
-  final String host = 'https://yawele-api.onrender.com/';
+  final String host = 'https://yawele-api.onrender.com';
   List<City> _cities = [];
   bool isLoading = false;
 

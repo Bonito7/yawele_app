@@ -9,7 +9,7 @@ import '../models/activity_model.dart';
 import '../models/trip_model.dart';
 
 class TripProvider with ChangeNotifier {
-  final String host = 'https://yawele-api.onrender.com/';
+  final String host = 'https://yawele-api.onrender.com';
   List<Trip> _trips = [];
   bool isLoading = false;
 
