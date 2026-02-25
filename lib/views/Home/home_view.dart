@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yawele_app/providers/city_provider.dart';
 import 'package:yawele_app/views/Home/widgets/city_card.dart';
 import 'package:yawele_app/widgets/dyma_drawer.dart';
-import 'package:yawele_app/widgets/dyma_loader.dart';
+import 'package:yawele_app/widgets/city_shimmer.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/city_model.dart';
@@ -90,7 +90,7 @@ class _HomeViewState extends State<HomeView> {
             child: Container(
               padding: const EdgeInsets.all(10.00),
               child: cityProvider.isLoading
-                  ? const DymaLoader()
+                  ? const CityShimmer()
                   : filteredCities.isNotEmpty
                       ? RefreshIndicator(
                           onRefresh:
