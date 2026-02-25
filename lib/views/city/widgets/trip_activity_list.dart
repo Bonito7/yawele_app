@@ -10,39 +10,37 @@ class TripActivityList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListView.builder(
-        itemBuilder: (context, index) {
-          var activity = activities[index];
-          return Card(
-            child: ListTile(
-              leading: CircleAvatar(
-                backgroundImage: NetworkImage(activity.image),
-              ),
-              title: Text(activity.name),
-              subtitle: Text(activity.city),
-              trailing: IconButton(
-                icon: const Icon(Icons.delete),
-                color: Colors.orangeAccent,
-                onPressed: () {
-                  deleteTripActivity(activity);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      backgroundColor: Colors.orangeAccent,
-                      duration: Duration(seconds: 1),
-                      content: Text(
-                        'L\'activité est bien supprimé!',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  );
-                },
-              ),
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        var activity = activities[index];
+        return Card(
+          child: ListTile(
+            leading: CircleAvatar(
+              backgroundImage: NetworkImage(activity.image),
             ),
-          );
-        },
-        itemCount: activities.length,
-      ),
+            title: Text(activity.name),
+            subtitle: Text(activity.city),
+            trailing: IconButton(
+              icon: const Icon(Icons.delete),
+              color: Colors.orangeAccent,
+              onPressed: () {
+                deleteTripActivity(activity);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    backgroundColor: Colors.orangeAccent,
+                    duration: Duration(seconds: 1),
+                    content: Text(
+                      'L\'activité est bien supprimé!',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        );
+      },
+      itemCount: activities.length,
     );
   }
 }

@@ -65,7 +65,7 @@ class _CityViewState extends State<CityView> with WidgetsBindingObserver {
       context: context,
       initialDate: DateTime.now().add(const Duration(days: 1)),
       firstDate: DateTime.now(),
-      lastDate: DateTime(2026),
+      lastDate: DateTime.now().add(const Duration(days: 365 * 5)),
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
@@ -161,6 +161,7 @@ class _CityViewState extends State<CityView> with WidgetsBindingObserver {
       },
     );
     if (result == 'save' && mytrip.date == null) {
+      if (!mounted) return;
       showDialog(
           context: context,
           builder: (context) {
@@ -200,6 +201,7 @@ class _CityViewState extends State<CityView> with WidgetsBindingObserver {
     } else if (result == 'save') {
       // widget.addTrip(mytrip);
       mytrip.city = cityName;
+      if (!mounted) return;
       Provider.of<TripProvider>(context, listen: false).addTrip(mytrip);
       Navigator.pushNamed(context, HomeView.routeName);
     }

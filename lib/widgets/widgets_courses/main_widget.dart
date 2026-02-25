@@ -20,7 +20,6 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    // TODO: implement initState
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),
@@ -37,7 +36,7 @@ class _MainWidgetState extends State<MainWidget> with TickerProviderStateMixin {
 
     _tweenSize!.addListener(() {
       setState(() {});
-      print(_tweenSize!.value);
+      debugPrint(_tweenSize!.value.toString());
     });
 
     super.initState();

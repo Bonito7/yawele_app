@@ -34,7 +34,6 @@ class _ActivityFormState extends State<ActivityForm> {
 
   @override
   void initState() {
-    // TODO: implement initState
     _newActivity = Activity(
       city: widget.cityName,
       name: '',
@@ -60,7 +59,7 @@ class _ActivityFormState extends State<ActivityForm> {
 
         _urlFocusNode.requestFocus();
       } else {
-        print('no focus');
+        debugPrint('no focus');
       }
     });
 
@@ -97,7 +96,6 @@ class _ActivityFormState extends State<ActivityForm> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _urlController.dispose();
     _priceFocusNode.dispose();
     _urlFocusNode.dispose();
@@ -127,13 +125,21 @@ class _ActivityFormState extends State<ActivityForm> {
         // Add the activity to the city using the provider
         await cityProvider.addActivityToCity(_newActivity);
         // Return to previous screen
+        if (!mounted) return;
         Navigator.pop(context);
       } else {
         setState(() => isLoading = false);
       }
     } catch (e) {
       // Handle any exceptions that occur during form submission
-      print('Error: $e');
+      debugPrint('Error: $e');
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Une erreur est survenue lors de l\'enregistrement.'),
+          backgroundColor: Colors.redAccent,
+        ),
+      );
       // Always stop loading after the process
       setState(() => isLoading = false);
     }

@@ -11,52 +11,51 @@ class TripActivities extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('BUILD : TRIPACTIVITIES');
+    debugPrint('BUILD : TRIPACTIVITIES');
 
-    return Container(
-      child: DefaultTabController(
-          length: 2,
-          child: Column(
-            children: [
-              Container(
-                color: Colors.deepOrangeAccent,
-                child: TabBar(
-                  indicatorColor: Colors.deepOrangeAccent,
-                  indicatorSize: TabBarIndicatorSize.tab,
-                  unselectedLabelColor: Colors.orange[400],
-                  labelStyle: TextStyle(
-                    color: Colors.orange[100],
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  tabs: const [
-                    Tab(
-                      text: 'En cours',
-                    ),
-                    Tab(
-                      text: 'Terminé(s)',
-                    ),
-                  ],
-                ),
+    return DefaultTabController(
+      length: 2,
+      child: Column(
+        children: [
+          Container(
+            color: Colors.deepOrangeAccent,
+            child: TabBar(
+              indicatorColor: Colors.deepOrangeAccent,
+              indicatorSize: TabBarIndicatorSize.tab,
+              unselectedLabelColor: Colors.orange[400],
+              labelStyle: TextStyle(
+                color: Colors.orange[100],
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
               ),
-              SizedBox(
-                height: 600,
-                child: TabBarView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: [
-                    TripActivitiesList(
-                      tripId: tripId,
-                      filter: ActivityStatus.ongoing,
-                    ),
-                    TripActivitiesList(
-                      tripId: tripId,
-                      filter: ActivityStatus.done,
-                    )
-                  ],
+              tabs: const [
+                Tab(
+                  text: 'En cours',
                 ),
-              )
-            ],
-          )),
+                Tab(
+                  text: 'Terminé(s)',
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 600,
+            child: TabBarView(
+              physics: const NeverScrollableScrollPhysics(),
+              children: [
+                TripActivitiesList(
+                  tripId: tripId,
+                  filter: ActivityStatus.ongoing,
+                ),
+                TripActivitiesList(
+                  tripId: tripId,
+                  filter: ActivityStatus.done,
+                )
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

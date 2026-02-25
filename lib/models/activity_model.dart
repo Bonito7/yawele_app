@@ -21,7 +21,12 @@ class Activity {
   Activity.fromJson(Map<String, dynamic> json)
       : id = json['_id'],
         name = json['name'],
-        image = json['image'],
+        image = json['image']
+            .toString()
+            .replaceAll('http://', 'https://')
+            .replaceAll('/public/assets/', '/assets/')
+            .replaceAll('/assets/images/', '/assets/images/activities/')
+            .replaceAll('/activities/activities/', '/activities/'),
         city = json['city'],
         price = json['price'].toDouble(),
         location = LocationActivity(

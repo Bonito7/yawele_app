@@ -20,8 +20,6 @@ class _ExampleAnimationWidgetState extends State<ExampleAnimationWidget>
 
   @override
   void initState() {
-    // TODO: implement initState
-
     controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 5),
@@ -56,7 +54,6 @@ class _ExampleAnimationWidgetState extends State<ExampleAnimationWidget>
 
   @override
   void dispose() {
-    // TODO: implement dispose
     controller!.dispose();
     super.dispose();
   }

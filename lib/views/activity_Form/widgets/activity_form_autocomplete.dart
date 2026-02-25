@@ -31,7 +31,7 @@ class _InputAdressState extends State<InputAdress> {
     try {
       if (_debounce?.isActive == true) _debounce?.cancel();
       _debounce = Timer(const Duration(seconds: 1), () async {
-        print(value);
+        debugPrint(value);
         if (value.isNotEmpty) {
           _places = await getAutocompleteSuggestions(value);
           setState(() {});
@@ -47,9 +47,11 @@ class _InputAdressState extends State<InputAdress> {
       LocationActivity location =
           await getPlaceDetailsApi(placeId); // Récupère les détails
       if (location.address != null) {
+        if (!mounted) return;
         Navigator.pop(
             context, location); // Ferme le modal et renvoie la location
       } else {
+        if (!mounted) return;
         Navigator.pop(context);
       }
     } catch (e) {

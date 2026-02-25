@@ -53,6 +53,7 @@ class _GoogleMapViewState extends State<GoogleMapView> {
     if (await canLaunchUrl(Uri.parse(url))) {
       await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
     } else {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
             content: Text('Impossible d\'ouvrir l\'application de navigation')),

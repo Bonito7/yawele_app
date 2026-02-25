@@ -14,7 +14,7 @@ class TripActivitiesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('BUILD : TRIPACTIVITYLIST');
+    debugPrint('BUILD : TRIPACTIVITYLIST');
     final Trip trip = Provider.of<TripProvider>(context).getTripById(tripId);
     final List<Activity> activities =
         trip.activities.where((activity) => activity.status == filter).toList();

@@ -8,9 +8,9 @@ import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:path/path.dart';
+import '../config/constants.dart';
 
 class CityProvider with ChangeNotifier {
-  final String host = 'https://yawele-api.onrender.com';
   List<City> _cities = [];
   bool isLoading = false;
 
@@ -33,7 +33,7 @@ class CityProvider with ChangeNotifier {
   Future<void> fetchData() async {
     try {
       isLoading = true;
-      final Uri url = Uri.parse('$host/api/cities');
+      final Uri url = Uri.parse('$hostUrl/api/cities');
       http.Response response = await http.get(url);
       if (response.statusCode == 200) {
         _cities = (json.decode(response.body) as List)
@@ -53,7 +53,7 @@ class CityProvider with ChangeNotifier {
       isLoading = true;
 
       String cityId = getCityByName(newActivity.city).id;
-      final Uri url = Uri.parse('$host/api/city/$cityId/activity');
+      final Uri url = Uri.parse('$hostUrl/api/city/$cityId/activity');
       http.Response response = await http.post(
         url,
         body: jsonEncode(newActivity.toJson()),
@@ -78,19 +78,19 @@ class CityProvider with ChangeNotifier {
     try {
       City city = getCityByName(cityName);
       final Uri url = Uri.parse(
-          '$host/api/city/${city.id}/activities/verify/$activityName');
+          '$hostUrl/api/city/${city.id}/activities/verify/$activityName');
 
       http.Response response = await http.get(url);
 
       // Print the status code and body for debugging
-      print('Status Code: ${response.statusCode}');
-      print('Response Body: ${response.body}');
+      debugPrint('Status Code: ${response.statusCode}');
+      debugPrint('Response Body: ${response.body}');
 
       if (response.statusCode == 200 && response.body.isNotEmpty) {
         return json.decode(response.body);
       }
     } catch (e) {
-      print('Error in verifying activity: $e');
+      debugPrint('Error in verifying activity: $e');
       rethrow;
     }
   }
@@ -98,13 +98,13 @@ class CityProvider with ChangeNotifier {
   Future<String> uploadImage(File pickedImage) async {
     var request = http.MultipartRequest(
       "POST",
-      Uri.parse('$host/api/activity/image'),
+      Uri.parse('$hostUrl/api/activity/image'),
     );
 
     request.files.add(
       http.MultipartFile.fromBytes(
         'activity',
-        pickedImage.readAsBytesSync(),
+        await pickedImage.readAsBytes(),
         filename: basename(pickedImage.path),
         contentType: MediaType('multipart', 'form-data'),
       ),
@@ -117,8 +117,8 @@ class CityProvider with ChangeNotifier {
       if (response.statusCode == 200) {
         var responseData = await response.stream.toBytes();
         var responseString = String.fromCharCodes(responseData);
-        print(responseData);
-        print('Image uploaded successfully');
+        debugPrint(responseData.toString());
+        debugPrint('Image uploaded successfully');
         return json.decode(responseString);
       } else {
         return 'Failed to upload image: ${response.statusCode}';

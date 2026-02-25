@@ -34,7 +34,6 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     searchController.dispose();
     super.dispose();
   }
@@ -74,7 +73,7 @@ class _HomeViewState extends State<HomeView> {
                       ),
                       hintText: 'rechercher une ville',
                     ),
-                    onSubmitted: (value) => print(value),
+                    onSubmitted: (value) => debugPrint(value),
                   ),
                 ),
                 IconButton(

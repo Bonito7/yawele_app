@@ -32,12 +32,10 @@ class TripOverview extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            child: TripOverviewCity(
-              cityName: cityName!,
-              cityImage: cityImage!,
-              cityId: cityId!,
-            ),
+          TripOverviewCity(
+            cityName: cityName!,
+            cityImage: cityImage!,
+            cityId: cityId!,
           ),
           const SizedBox(
             height: 20,

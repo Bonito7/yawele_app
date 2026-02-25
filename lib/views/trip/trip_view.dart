@@ -15,7 +15,7 @@ class TripView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('BUILD : TRIPVIEW');
+    debugPrint('BUILD : TRIPVIEW');
 
     final String? cityName = (ModalRoute.of(context)!.settings.arguments
         as Map<String?, String?>)['cityName'];
@@ -26,20 +26,18 @@ class TripView extends StatelessWidget {
 
     return Scaffold(
       body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: [
-              TripCityBar(
-                city: city,
-              ),
-              TripWeather(
-                cityName: cityName,
-              ),
-              TripActivities(
-                tripId: tripId!,
-              ),
-            ],
-          ),
+        child: Column(
+          children: [
+            TripCityBar(
+              city: city,
+            ),
+            TripWeather(
+              cityName: cityName,
+            ),
+            TripActivities(
+              tripId: tripId!,
+            ),
+          ],
         ),
       ),
     );

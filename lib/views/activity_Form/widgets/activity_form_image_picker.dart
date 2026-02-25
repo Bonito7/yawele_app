@@ -24,73 +24,72 @@ class _ActivityFormImagePickerState extends State<ActivityFormImagePicker> {
       final XFile? pickedFile = await imagePicker.pickImage(source: source);
 
       if (pickedFile != null) {
+        if (!mounted) return;
         final url = await Provider.of<CityProvider>(context, listen: false)
             .uploadImage(File(pickedFile.path));
-        print('url final $url');
+        debugPrint('url final $url');
         widget.updateUrl(url);
         setState(() {
           _deviceImage = File(pickedFile.path); // Assign the picked file
         });
-        print('Image picked: ${pickedFile.path}');
+        debugPrint('Image picked: ${pickedFile.path}');
       } else {
-        print('No image selected');
+        debugPrint('No image selected');
       }
     } catch (e) {
-      print('Error picking image: $e');
+      debugPrint('Error picking image: $e');
       rethrow;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Row(
-            children: [
-              TextButton.icon(
-                onPressed: () => _pickImage(ImageSource.gallery),
-                icon: const Icon(
-                  Icons.photo,
-                  color: Colors.green,
-                ),
-                label: const Text(
-                  'Galerie',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey,
-                  ),
+    return Column(
+      children: [
+        Row(
+          children: [
+            TextButton.icon(
+              onPressed: () => _pickImage(ImageSource.gallery),
+              icon: const Icon(
+                Icons.photo,
+                color: Colors.green,
+              ),
+              label: const Text(
+                'Galerie',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey,
                 ),
               ),
-              TextButton.icon(
-                onPressed: () => _pickImage(ImageSource.camera),
-                icon: const Icon(
-                  Icons.photo_camera,
-                  color: Colors.green,
-                ),
-                label: const Text(
-                  'Caméra',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              border: Border.all(width: 1, color: Colors.green),
             ),
-            child: _deviceImage != null
-                ? Image.file(_deviceImage!,
-                    fit: BoxFit.cover) // Display selected image
-                : const Text('Aucune Image sélectionnée',
-                    textAlign: TextAlign.center),
+            TextButton.icon(
+              onPressed: () => _pickImage(ImageSource.camera),
+              icon: const Icon(
+                Icons.photo_camera,
+                color: Colors.green,
+              ),
+              label: const Text(
+                'Caméra',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+          ],
+        ),
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            border: Border.all(width: 1, color: Colors.green),
           ),
-        ],
-      ),
+          child: _deviceImage != null
+              ? Image.file(_deviceImage!,
+                  fit: BoxFit.cover) // Display selected image
+              : const Text('Aucune Image sélectionnée',
+                  textAlign: TextAlign.center),
+        ),
+      ],
     );
   }
 }

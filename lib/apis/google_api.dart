@@ -2,24 +2,26 @@ import 'package:yawele_app/models/activity_model.dart';
 import 'package:yawele_app/models/place_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import '../config/constants.dart';
+import 'package:flutter/foundation.dart';
 
-const GOOGLE_KEY_API = 'AIzaSyDuUYnalbqsnx14aUssQWbAmDxgIjK4T20';
+const googleKeyApi = googleKeyApiConst;
 
 Uri _queryAutocompleteBuilder(String query) {
   return Uri.parse(
-    'https://maps.googleapis.com/maps/api/place/queryautocomplete/json?input=$query&key=$GOOGLE_KEY_API',
+    'https://maps.googleapis.com/maps/api/place/queryautocomplete/json?input=$query&key=$googleKeyApi',
   );
 }
 
 Uri _queryPlaceDetailsBuilder(String placeId) {
   return Uri.parse(
-    'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&fields=formatted_address,geometry&key=$GOOGLE_KEY_API',
+    'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&fields=formatted_address,geometry&key=$googleKeyApi',
   );
 }
 
 Uri _queryGetAddressFromLatLngBuilder({double? lat, double? lng}) {
   return Uri.parse(
-    'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=$GOOGLE_KEY_API',
+    'https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=$googleKeyApi',
   );
 }
 
@@ -39,7 +41,7 @@ Future<List<Place>> getAutocompleteSuggestions(String query) async {
       throw Exception('Échec du chargement des suggestions');
     }
   } catch (e) {
-    print(
+    debugPrint(
         'Erreur dans la récupération des suggestions de la saisie semi-automatique: $e');
     rethrow;
   }
@@ -60,7 +62,7 @@ Future<LocationActivity> getPlaceDetailsApi(String placeId) async {
       throw Exception('Aucune adresse trouvée pour ce lieu');
     }
   } catch (e) {
-    print('Erreur dans la récupération des détails du lieu: $e');
+    debugPrint('Erreur dans la récupération des détails du lieu: $e');
     rethrow;
   }
 }
@@ -79,7 +81,7 @@ Future<String?> getAddressFromCoordinates({
       return null; // Si aucun résultat n'est trouvé
     }
   } catch (e) {
-    print('Erreur dans la récupération de l\'adresse: $e');
+    debugPrint('Erreur dans la récupération de l\'adresse: $e');
     rethrow;
   }
 }

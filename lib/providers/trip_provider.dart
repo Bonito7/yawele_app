@@ -7,9 +7,9 @@ import 'dart:convert';
 
 import '../models/activity_model.dart';
 import '../models/trip_model.dart';
+import '../config/constants.dart';
 
 class TripProvider with ChangeNotifier {
-  final String host = 'https://yawele-api.onrender.com';
   List<Trip> _trips = [];
   bool isLoading = false;
 
@@ -18,7 +18,7 @@ class TripProvider with ChangeNotifier {
   Future<void> fetchData() async {
     try {
       isLoading = true;
-      final Uri url = Uri.parse('$host/api/trips');
+      final Uri url = Uri.parse('$hostUrl/api/trips');
       http.Response response = await http.get(url);
 
       if (response.statusCode == 200) {
@@ -36,13 +36,13 @@ class TripProvider with ChangeNotifier {
 
   Future<void> addTrip(Trip trip) async {
     try {
-      final Uri url = Uri.parse('$host/api/trip');
+      final Uri url = Uri.parse('$hostUrl/api/trip');
       http.Response response = await http.post(
         url,
         body: jsonEncode(trip.toJson()),
         headers: {'Content-type': 'application/json'},
       );
-      print(response.body);
+      debugPrint(response.body);
       if (response.statusCode == 200) {
         _trips.add(
           Trip.fromJson(
@@ -63,7 +63,7 @@ class TripProvider with ChangeNotifier {
 
       activity.status = ActivityStatus.done;
 
-      final Uri url = Uri.parse('$host/api/trip');
+      final Uri url = Uri.parse('$hostUrl/api/trip');
       http.Response response = await http.put(
         url,
         body: jsonEncode(trip.toJson()),
